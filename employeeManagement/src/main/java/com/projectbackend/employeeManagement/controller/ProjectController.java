@@ -37,18 +37,18 @@ public class ProjectController {
     }
 
     //get project by ID
-    @GetMapping("/projects/{projectid}")
-    public ResponseEntity<Project> getProjectByID(@PathVariable("projectid") Long id){
-       Project project = projectRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Project does not exist with id : " + id));
+    @GetMapping("/projects/{projectID}")
+    public ResponseEntity<Project> getProjectByID(@PathVariable("projectID") Long projectID){
+       Project project = projectRepository.findById(projectID).
+                orElseThrow(() -> new ResourceNotFoundException("Project does not exist with id : " + projectID));
         return ResponseEntity.ok(project);
     }
 
     //update project
-    @PutMapping("/projects/{projectid}")
-    public ResponseEntity<Project> updateProject(@PathVariable("projectid") Long id, @NotNull @Validated @RequestBody Project projectDetail) throws ResourceNotFoundException {
-        Project project = projectRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Project not exist with id : " + id));
+    @PutMapping("/projects/{projectID}")
+    public ResponseEntity<Project> updateProject(@PathVariable("projectID") Long projectID, @NotNull @Validated @RequestBody Project projectDetail) throws ResourceNotFoundException {
+        Project project = projectRepository.findById(projectID).
+                orElseThrow(() -> new ResourceNotFoundException("Project not exist with id : " + projectID));
         project.setDepartment(projectDetail.getDepartment());
         project.setDueDate(projectDetail.getDueDate());
         project.setName(projectDetail.getName());
@@ -61,10 +61,10 @@ public class ProjectController {
     }
 
     //delete project
-    @DeleteMapping("/projects/{projectsid}")
-    public Map<String, Boolean> deleteProject(@PathVariable("projectid") Long id)throws ResourceNotFoundException{
-        Project project = projectRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Project not exist with id : " + id));
+    @DeleteMapping("/projects/{projectID}")
+    public Map<String, Boolean> deleteProject(@PathVariable("projectID") Long projectID)throws ResourceNotFoundException{
+        Project project = projectRepository.findById(projectID).
+                orElseThrow(() -> new ResourceNotFoundException("Project not exist with id : " + projectID));
         projectRepository.delete(project);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted",Boolean.TRUE);

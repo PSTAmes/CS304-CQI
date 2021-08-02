@@ -37,29 +37,29 @@ public class EmployeeDetailController {
     }
 
     //get employeeDetails by ID
-    @GetMapping("/employeeDetails/{id}")
-    public ResponseEntity<EmployeeDetails> getDetailsByID(@PathVariable("id") Long id){
-        EmployeeDetails employeeDetails = employeeDetailsRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Employee Details not exist with id : " + id));
+    @GetMapping("/employeeDetails/{detailID}")
+    public ResponseEntity<EmployeeDetails> getDetailsByID(@PathVariable("detailID") Long detailID){
+        EmployeeDetails employeeDetails = employeeDetailsRepository.findById(detailID).
+                orElseThrow(() -> new ResourceNotFoundException("Employee Details not exist with id : " + detailID));
         return ResponseEntity.ok(employeeDetails);
     }
 
     //update employeeDetails
-    @PutMapping("/employeeDetails/{id}")
-    public ResponseEntity<EmployeeDetails> updateEmployeeDetail(@PathVariable("id") Long id, @NotNull @Validated @RequestBody EmployeeDetails employeeDetails) throws ResourceNotFoundException {
-        EmployeeDetails details = employeeDetailsRepository.findById(id).
-                orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : " + id));
-        details.setDetailID(employeeDetails.getDetailID());
-        details.setEmployee(employeeDetails.getEmployee());
-        details.setIsActive(employeeDetails.getIsActive());
-        details.setAddress(employeeDetails.getAddress());
-        details.setDob(employeeDetails.getDob());
-        details.setEmail(employeeDetails.getEmail());
-        details.setFirstName(employeeDetails.getFirstName());
-        details.setLastName(employeeDetails.getLastName());
-        details.setGender(employeeDetails.getGender());
-        details.setMobile(employeeDetails.getMobile());
-        details.setJoinedDate(employeeDetails.getJoinedDate());
+    @PutMapping("/employeeDetails/{detailID}")
+    public ResponseEntity<EmployeeDetails> updateEmployeeDetail(@PathVariable("detailID") Long detailID, @NotNull @Validated @RequestBody EmployeeDetails employee) throws ResourceNotFoundException {
+        EmployeeDetails details = employeeDetailsRepository.findById(detailID).
+                orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id : " + detailID));
+        details.setDetailID(employee.getDetailID());
+        details.setEmployee(employee.getEmployee());
+        details.setIsActive(employee.getIsActive());
+        details.setAddress(employee.getAddress());
+        details.setDob(employee.getDob());
+        details.setEmail(employee.getEmail());
+        details.setFirstName(employee.getFirstName());
+        details.setLastName(employee.getLastName());
+        details.setGender(employee.getGender());
+        details.setMobile(employee.getMobile());
+        details.setJoinedDate(employee.getJoinedDate());
 
         EmployeeDetails updated = employeeDetailsRepository.save(details);
         return ResponseEntity.ok(updated);
